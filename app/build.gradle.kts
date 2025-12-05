@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.movieticketapp"       // ← choose one ID and keep it everywhere
+    namespace = "com.example.movie_ticket_app"      // ← choose one ID and keep it everywhere
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.movieticketapp" // ← must match google-services.json
+        applicationId = "com.example.movie_ticket_app" // ← must match google-services.json
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -32,6 +32,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions { jvmTarget = "17" }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -48,5 +51,6 @@ dependencies {
 
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.github.ismaeldivita:chip-navigation-bar:1.4.0") // needs jitpack
-    implementation("com.eightbitlab:blurview:2.0.3")                    // correct artifact
+    //implementation("com.eightbitlab:blurview:2.0.3")
+    implementation("com.github.Dimezis:BlurView:version-2.0.3")// correct artifact
 }

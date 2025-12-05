@@ -13,19 +13,19 @@
         android:theme="@style/Theme.Movieticketapp"
         tools:targetApi="31">
         <activity
-            android:name="com.example.movie_ticket_app.SpashActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SplashActivity"
-            android:exported="false" />
+            android:name="com.example.movie_ticket_app.SplashActivity"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
