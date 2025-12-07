@@ -1,0 +1,54 @@
+package com.example.movie_ticket_app.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.example.movie_ticket_app.databinding.ViewholderSilderBinding
+import com.example.movie_ticket_app.model.SlidersItems
+import android.content.Context
+
+class SliderAdapter (
+    private var sliderItems: MutableList<SlidersItems>, private val viewPager2: ViewPager2
+) : RecyclerView.Adapter<SliderAdapter.SliderViewholder>() {
+    private var context: Context? = null
+    private val runnable= Runnable {
+        sliderItems.addAll(sliderItems)
+        notifyDataSetChanged()
+    }
+        inner class SliderViewholder(private val binding: ViewholderSilderBinding):
+        RecyclerView.ViewHolder(binding.root) {
+            fun bind(sliderItems: SlidersItems) {
+                context?.let{
+                    Glide.with(it)
+                        .load(sliderItems.image)
+                        .apply(
+                            RequestOptions().transform(CenterCrop(), RoundedCorners(60))
+                        )
+                        .into(binding.imageSlide)
+                }
+            }
+        }
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): SliderAdapter.SliderViewholder {
+        context=parent.context
+        val binding=ViewholderSilderBinding.inflate(LayoutInflater.from(parent.context)
+        ,parent,false)
+        return SliderViewholder(binding)
+    }
+
+    override fun onBindViewHolder(holder: SliderAdapter.SliderViewholder, position: Int) {
+        holder.bind(sliderItems[position])
+        if(position==sliderItems.size-2){
+            viewPager2.post (runnable)
+        }
+    }
+
+    override fun getItemCount(): Int =sliderItems.size
+}
