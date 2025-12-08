@@ -7,15 +7,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.movie_ticket_app.adapter.FilmListAdapter
 import com.example.movie_ticket_app.adapter.SliderAdapter
 import com.example.movie_ticket_app.databinding.ActivityMainBinding
+import com.example.movie_ticket_app.model.Film
 import com.example.movie_ticket_app.model.SlidersItems
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
@@ -36,8 +40,47 @@ class MainActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance()
 
         initBanner()
+        initTopMovies()
+        initUpcoming()
 
     }
+
+    private fun initTopMovies() {
+        val myRef:DatabaseReference=database.getReference("Items")
+        binding.progressBarTopMovies.visibility= View.VISIBLE
+        val items= ArrayList<Film>()
+
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()) {
+                    for (i in snapshot.children) {
+                        val item=i.getValue(Film::class.java)
+                        if(item!=null){
+                            items.add(item)
+                        }
+                    }
+                    if(items.isNotEmpty()){
+                        binding.recyclerViewTopMovies.layoutManager=
+                            LinearLayoutManager(
+                                this@MainActivity,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                        binding.recyclerViewTopMovies.adapter = FilmListAdapter(items)
+                    }
+                    binding.progressBarTopMovies.visibility= View.GONE
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // You can keep this empty if you don’t want any behavior change
+               TODO( reason = "Not yet implemented")
+            }
+
+
+        })
+    }
+
     private fun initBanner(){
         val myRef = database.getReference("Banners")
         binding.progressBarSlider.visibility= View.VISIBLE
@@ -84,6 +127,42 @@ class MainActivity : AppCompatActivity() {
                 sliderHandle.removeCallbacks(sliderRunnable)
             }
         })
-        
+
+
+    }
+    private fun initUpcoming() {
+        val myRef:DatabaseReference=database.getReference("Upcomming")
+        binding.progressBarUpcoming.visibility= View.VISIBLE
+        val items= ArrayList<Film>()
+
+        myRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (i in snapshot.children) {
+                        val item = i.getValue(Film::class.java)
+                        if (item != null) {
+                            items.add(item)
+                        }
+                    }
+                    if (items.isNotEmpty()) {
+                        binding.recyclerViewUpcoming.layoutManager =
+                            LinearLayoutManager(
+                                this@MainActivity,
+                                LinearLayoutManager.HORIZONTAL,
+                                false
+                            )
+                        binding.recyclerViewUpcoming.adapter = FilmListAdapter(items)
+                    }
+                    binding.progressBarUpcoming.visibility = View.GONE
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // You can keep this empty if you don’t want any behavior change
+                TODO(reason = "Not yet implemented")
+            }
+
+
+        })
     }
 }
