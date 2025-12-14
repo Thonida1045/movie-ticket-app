@@ -13,10 +13,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }  // needed for chip-navigation-bar
+        maven { url = uri("https://jitpack.io") }
     }
 }
 
 rootProject.name = "movie-ticket-app"
 include(":app")
- 

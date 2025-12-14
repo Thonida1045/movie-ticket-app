@@ -1,4 +1,4 @@
-package com.example.movie_ticket_app
+package com.example.movie_ticket_app.activity
 
 import android.content.Intent
 import android.os.Bundle

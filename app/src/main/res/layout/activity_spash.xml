@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context="com.example.movie_ticket_app.SplashActivity">
+    tools:context="com.example.movie_ticket_app.activity.SplashActivity">
 
     <ScrollView
         android:layout_width="match_parent"
