@@ -1,10 +1,10 @@
-
+// settings.gradle.kts (top-level)
 pluginManagement {
     repositories {
         google()
-        gradlePluginPortal()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
+        gradlePluginPortal()
+        // JitPack is not needed here unless you fetch plugins from JitPack.
     }
 }
 
@@ -13,9 +13,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://jitpack.io") } // Required for BlurView
     }
 }
 
-rootProject.name = "movie-ticket-app"
+rootProject.name = "YourProjectName"
 include(":app")

@@ -1,5 +1,7 @@
 package com.example.movie_ticket_app.adapter
 import android.content.Context
+import android.content.Intent
+import android.telecom.Call
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
+import com.example.movie_ticket_app.activity.DetailFilmActivity
 import com.example.movie_ticket_app.databinding.ViewholderFilmBinding
 import com.example.movie_ticket_app.model.Film
 
@@ -24,6 +27,12 @@ class FilmListAdapter(private val items: ArrayList<Film>):
                 .load(item.Poster)
                 .apply(requestOptions)
                 .into(binding.pic)
+
+            binding.root.setOnClickListener {
+                val intent = Intent(context, DetailFilmActivity::class.java)
+                intent.putExtra("object", item)
+                context!!.startActivity(intent)
+            }
         }
 
     }
