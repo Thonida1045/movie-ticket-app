@@ -13,4 +13,5 @@ data class Film(
     var price: Double=0.0,
     var Genre: ArrayList<String> = ArrayList(),
     var Casts: ArrayList<Cast> = ArrayList(),
+
 ):Serializable

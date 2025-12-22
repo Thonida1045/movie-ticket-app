@@ -1,5 +1,6 @@
     package com.example.movie_ticket_app.activity
 
+    import android.content.Intent
     import android.os.Bundle
     import android.view.View
     import android.view.ViewGroup
@@ -71,6 +72,11 @@
                 binding.castListView.layoutManager =
                     LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
                 binding.castListView.adapter = CastListAdapter(it)
+            }
+            binding.buyTicketBtn.setOnClickListener {
+                val intent= Intent(this, SeatListActivity::class.java)
+                intent.putExtra("film", film)
+                startActivity(intent)
             }
         }
     }
