@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         initTopMovies()
         initUpcoming()
 
+
     }
 
     private fun initTopMovies() {
