@@ -31,6 +31,7 @@ androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview"
 
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
 firebase-database = { group = "com.google.firebase", name = "firebase-database", version.ref = "firebaseDatabase" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 chip-navigation-bar = { group = "com.github.ismaeldivita", name = "chip-navigation-bar", version.ref = "chipnav"}
 blurview = { group = "com.github.Dimezis", name = "BlurView", version.ref = "blurview" }
 

@@ -11,4 +11,17 @@
     <string name="casts">Casts</string>
     <string name="buy_ticket">Buy Ticket</string>
     <string name="title">title</string>
+    <string name="welcome_back">Welcome Back</string>
+    <string name="login_to_continue">Login to continue booking movies</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="dont_have_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="skip_for_now">Skip for now</string>
+    <string name="login_successful">Login successful!</string>
+    <string name="login_failed">Login failed. Please try again.</string>
+    <string name="please_enter_email">Please enter your email</string>
+    <string name="please_enter_password">Please enter your password</string>
+    <string name="invalid_email">Please enter a valid email address</string>
 </resources>
