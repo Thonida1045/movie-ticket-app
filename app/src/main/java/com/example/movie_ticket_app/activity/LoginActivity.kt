@@ -123,13 +123,13 @@ class LoginActivity : AppCompatActivity() {
                     navigateToMain()
                 } else {
                     val errorMessage = when (task.exception?.message?.lowercase()) {
-                        null -> "Unknown error"
+                        null -> getString(R.string.signup_error_unknown)
                         else -> {
                             when {
-                                task.exception?.message?.contains("email") == true -> "Invalid email address"
-                                task.exception?.message?.contains("password") == true -> "Weak password"
-                                task.exception?.message?.contains("already") == true -> "Email already in use"
-                                else -> "Sign up failed. Please try again."
+                                task.exception?.message?.contains("email") == true -> getString(R.string.signup_error_invalid_email)
+                                task.exception?.message?.contains("password") == true -> getString(R.string.signup_error_weak_password)
+                                task.exception?.message?.contains("already") == true -> getString(R.string.signup_error_email_in_use)
+                                else -> getString(R.string.signup_error_generic)
                             }
                         }
                     }
