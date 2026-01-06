@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.movie_ticket_app.R
 import com.example.movie_ticket_app.databinding.ActivityLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -99,9 +100,15 @@ class LoginActivity : AppCompatActivity() {
                     ).show()
                     navigateToMain()
                 } else {
+                    val errorMessage = when ((task.exception as? FirebaseAuthException)?.errorCode) {
+                        "ERROR_INVALID_CREDENTIAL" -> getString(R.string.login_error_invalid_credential)
+                        "ERROR_USER_NOT_FOUND" -> getString(R.string.login_error_user_not_found)
+                        "ERROR_WRONG_PASSWORD" -> getString(R.string.login_error_wrong_password)
+                        else -> getString(R.string.login_failed)
+                    }
                     Toast.makeText(
                         this,
-                        getString(R.string.login_failed),
+                        errorMessage,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -122,16 +129,11 @@ class LoginActivity : AppCompatActivity() {
                     ).show()
                     navigateToMain()
                 } else {
-                    val errorMessage = when (task.exception?.message?.lowercase()) {
-                        null -> getString(R.string.signup_error_unknown)
-                        else -> {
-                            when {
-                                task.exception?.message?.contains("email") == true -> getString(R.string.signup_error_invalid_email)
-                                task.exception?.message?.contains("password") == true -> getString(R.string.signup_error_weak_password)
-                                task.exception?.message?.contains("already") == true -> getString(R.string.signup_error_email_in_use)
-                                else -> getString(R.string.signup_error_generic)
-                            }
-                        }
+                    val errorMessage = when ((task.exception as? FirebaseAuthException)?.errorCode) {
+                        "ERROR_INVALID_EMAIL" -> getString(R.string.signup_error_invalid_email)
+                        "ERROR_WEAK_PASSWORD" -> getString(R.string.signup_error_weak_password)
+                        "ERROR_EMAIL_ALREADY_IN_USE" -> getString(R.string.signup_error_email_in_use)
+                        else -> getString(R.string.signup_error_generic)
                     }
                     Toast.makeText(
                         this,

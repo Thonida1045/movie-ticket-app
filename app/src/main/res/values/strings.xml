@@ -21,12 +21,14 @@
     <string name="skip_for_now">Skip for now</string>
     <string name="login_successful">Login successful!</string>
     <string name="login_failed">Login failed. Please try again.</string>
+    <string name="login_error_invalid_credential">Invalid email or password</string>
+    <string name="login_error_user_not_found">No account found with this email</string>
+    <string name="login_error_wrong_password">Incorrect password</string>
     <string name="please_enter_email">Please enter your email</string>
     <string name="please_enter_password">Please enter your password</string>
     <string name="invalid_email">Please enter a valid email address</string>
     <string name="password_min_length">Password must be at least 6 characters</string>
     <string name="account_created">Account created successfully!</string>
-    <string name="signup_error_unknown">Unknown error</string>
     <string name="signup_error_invalid_email">Invalid email address</string>
     <string name="signup_error_weak_password">Weak password</string>
     <string name="signup_error_email_in_use">Email already in use</string>
