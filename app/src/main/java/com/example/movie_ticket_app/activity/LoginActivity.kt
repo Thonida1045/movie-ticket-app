@@ -24,7 +24,8 @@ class LoginActivity : AppCompatActivity() {
         // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Check if user is already logged in
+        // Check if user is already logged in and navigate to MainActivity
+        // In this case, we skip setting up click listeners since they're not needed
         if (auth.currentUser != null) {
             navigateToMain()
             return
@@ -76,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         if (password.length < 6) {
-            binding.passwordInputLayout.error = "Password must be at least 6 characters"
+            binding.passwordInputLayout.error = getString(R.string.password_min_length)
             return false
         }
 
@@ -116,14 +117,25 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(
                         this,
-                        "Account created successfully!",
+                        getString(R.string.account_created),
                         Toast.LENGTH_SHORT
                     ).show()
                     navigateToMain()
                 } else {
+                    val errorMessage = when (task.exception?.message?.lowercase()) {
+                        null -> "Unknown error"
+                        else -> {
+                            when {
+                                task.exception?.message?.contains("email") == true -> "Invalid email address"
+                                task.exception?.message?.contains("password") == true -> "Weak password"
+                                task.exception?.message?.contains("already") == true -> "Email already in use"
+                                else -> "Sign up failed. Please try again."
+                            }
+                        }
+                    }
                     Toast.makeText(
                         this,
-                        "Sign up failed: ${task.exception?.message}",
+                        errorMessage,
                         Toast.LENGTH_SHORT
                     ).show()
                 }
