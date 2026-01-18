@@ -158,10 +158,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/button"
+                    android:id="@+id/booking_ticket"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:text="Download Ticket"
+                    android:text="Booking Ticket"
                     android:textColor="@color/white"
                     android:background="@drawable/green_bg"
                     android:layout_marginVertical="8dp"

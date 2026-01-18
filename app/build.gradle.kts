@@ -1,9 +1,9 @@
 
 plugins {
     id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
-    id("kotlin-kapt")
+    id("org.jetbrains.kotlin.android")   // keep ONE Kotlin plugin
+    kotlin("kapt")                       // use the KTS form for kapt
+    id("com.google.gms.google-services") // Firebase services plugin
 }
 
 android {
@@ -30,10 +30,8 @@ android {
         }
     }
 
-    // You can keep the exclusion to avoid old support libs leaking in
-    configurations.all {
-        exclude(group = "com.android.support")
-    }
+    // Optional: keep this if you previously had old support libs around
+    configurations.all { exclude(group = "com.android.support") }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -45,6 +43,7 @@ android {
 }
 
 dependencies {
+    // --- AndroidX / UI ---
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -52,19 +51,23 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation("androidx.activity:activity:1.12.1")
 
+    // --- Tests ---
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // --- Glide (use EITHER version-catalog OR fixed version, not both) ---
     implementation(libs.glide)
     kapt(libs.glide.compiler)
 
+    // --- Firebase (use the BoM from your version catalog) ---
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.database)
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-database")
 
+    // --- Your other libs ---
     implementation(libs.chip.navigation.bar)
 
-    // —— BlurView: keep ONLY v3.x (includes RenderEffectBlur) ——
+    // BlurView (keep your existing version)
     implementation("com.github.Dimezis:BlurView:version-2.0.6")
-
 }
