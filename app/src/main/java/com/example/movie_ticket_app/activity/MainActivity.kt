@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.example.movie_ticket_app.BottomNavHelper
 import com.example.movie_ticket_app.adapter.FilmListAdapter
 import com.example.movie_ticket_app.adapter.SliderAdapter
 import com.example.movie_ticket_app.databinding.ActivityMainBinding
@@ -40,8 +41,14 @@ class MainActivity : AppCompatActivity() {
         initBanner()
         initTopMovies()
         initUpcoming()
+        setupBottomNavigation()
+    }
 
-
+    private fun setupBottomNavigation() {
+        binding.chipNav.setItemSelected(com.example.movie_ticket_app.R.id.explorer, true)
+        with(BottomNavHelper()) {
+            this@MainActivity.setupBottomNav(binding.chipNav)
+        }
     }
 
     private fun initTopMovies() {

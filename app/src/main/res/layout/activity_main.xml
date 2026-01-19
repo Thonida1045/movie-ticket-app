@@ -222,6 +222,7 @@
     </ScrollView>
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
+        android:id="@+id/chipNav"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="16dp"

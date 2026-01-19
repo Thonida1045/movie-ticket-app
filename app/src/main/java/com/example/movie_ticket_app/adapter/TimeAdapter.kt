@@ -7,7 +7,8 @@ import com.example.movie_ticket_app.R;
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movie_ticket_app.databinding.ItemTimeBinding
 
-class TimeAdapter(private val timeSlots:List<String>):
+class TimeAdapter(private val timeSlots:List<String>,
+                  private val onItemClick: (String) -> Unit):
     RecyclerView.Adapter<TimeAdapter.ViewHolder> () {
         private var selectedPosition =-1
         private var lastSelectedPosition=-1

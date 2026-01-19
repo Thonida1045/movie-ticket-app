@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,6 +36,18 @@ class SeatListActivity : AppCompatActivity() {
     private var selectedTime: String? = null
     private var selectedSeatsLabel: String = ""
 
+    // Activity result launcher for login
+    private val loginLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            // User logged in successfully, proceed with booking
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                createBookingAndGoToHistory()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -46,9 +59,10 @@ class SeatListActivity : AppCompatActivity() {
         initTimeDateList()
         initSeatsList()
 
-        // Change old "Download Ticket" → "Book Ticket"
-        binding.btnBookTicket.text = "Book Ticket"
-        binding.btnBookTicket.setOnClickListener { onBookTicketClicked() }
+        // Set up booking button click listener
+        binding.bookingTicket.setOnClickListener {
+            onBookTicketClicked()
+        }
     }
 
     private fun setVariable() {
@@ -140,17 +154,16 @@ class SeatListActivity : AppCompatActivity() {
     private fun onBookTicketClicked() {
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser == null) {
-            // Not logged in → go to Login (you can pass pending info if you want to resume)
-            val i = Intent(this, LoginActivity::class.java).apply {
-                putExtra("pendingMovieId", film.id)        // TODO adjust field name
-                putExtra("pendingTitle", film.title)       // TODO adjust
-                putExtra("pendingPoster", film.posterUrl ?: "")
+            // Not logged in → go to Login with pending booking data
+            val intent = Intent(this, LoginActivity::class.java).apply {
+                putExtra("pendingTitle", film.Title)
+                putExtra("pendingPoster", film.Poster ?: "")
                 putExtra("pendingSeat", selectedSeatsLabel)
                 putExtra("pendingDate", selectedDate)
                 putExtra("pendingTime", selectedTime)
                 putExtra("pendingPrice", price)
             }
-            startActivity(i)
+            loginLauncher.launch(intent)
             return
         }
         createBookingAndGoToHistory()
@@ -171,10 +184,9 @@ class SeatListActivity : AppCompatActivity() {
         // Build booking map (server timestamp is recommended)
         val bookingMap = hashMapOf<String, Any?>(
             "id" to bookingId,
-            "userId" to uid,
-            "movieId" to film.id,                 // TODO adjust field name
-            "movieTitle" to film.title,           // TODO adjust
-            "posterUrl" to (film.posterUrl ?: ""),// TODO adjust if null safe
+            "userId" to uid,               // TODO adjust field name
+            "movieTitle" to film.Title,           // TODO adjust
+            "posterUrl" to (film.Poster ?: ""),// TODO adjust if null safe
             "cinema" to "Cinema A",
             "seat" to selectedSeatsLabel,
             "showDate" to selectedDate,
@@ -202,8 +214,6 @@ class SeatListActivity : AppCompatActivity() {
     }
 
     private fun setLoading(show: Boolean) {
-        // If you have a ProgressBar in layout, toggle it
-        binding.progressBar?.visibility = if (show) View.VISIBLE else View.GONE
-        binding.btnBookTicket.isEnabled = !show
+        binding.bookingTicket.isEnabled = !show
     }
 }
