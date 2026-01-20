@@ -3,9 +3,11 @@ package com.example.movie_ticket_app.adapter
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.movie_ticket_app.R
 import com.example.movie_ticket_app.activity.HistoryActivity
 import com.example.movie_ticket_app.activity.LoginActivity
@@ -16,6 +18,8 @@ class Profile : Fragment(R.layout.activity_profile) {
 
     private lateinit var auth: FirebaseAuth
     private var tvUserName: TextView? = null
+    private var tvUserEmail: TextView? = null
+    private var profileImage: ImageView? = null
     private var btnLogout: View? = null
     private var btnMyTickets: View? = null
     private var btnSettings: View? = null
@@ -25,6 +29,8 @@ class Profile : Fragment(R.layout.activity_profile) {
         
         // Initialize views manually
         tvUserName = view.findViewById(R.id.tvUserName)
+        tvUserEmail = view.findViewById(R.id.tvUserEmail)
+        profileImage = view.findViewById(R.id.profileImage)
         btnLogout = view.findViewById(R.id.btnLogout)
         btnMyTickets = view.findViewById(R.id.btnMyTickets)
         btnSettings = view.findViewById(R.id.btnSettings)
@@ -77,9 +83,29 @@ class Profile : Fragment(R.layout.activity_profile) {
     }
 
     private fun displayUserData(user: FirebaseUser) {
-        // Display user's email if display name is not set
         val displayName = user.displayName
-        tvUserName?.text = if (!displayName.isNullOrEmpty()) displayName else user.email ?: "User"
+        val email = user.email
+        val photoUrl = user.photoUrl
+        
+        // Set user name
+        tvUserName?.text = when {
+            !displayName.isNullOrEmpty() -> displayName
+            !email.isNullOrEmpty() -> email.substringBefore("@")
+            else -> "User"
+        }
+        
+        // Set user email
+        tvUserEmail?.text = email ?: ""
+        
+        // Load profile photo from Google account
+        if (photoUrl != null && profileImage != null && context != null) {
+            Glide.with(requireContext())
+                .load(photoUrl)
+                .circleCrop()
+                .placeholder(R.drawable.ic_movie_ticket)
+                .error(R.drawable.ic_movie_ticket)
+                .into(profileImage!!)
+        }
     }
 
     private fun navigateToLogin() {
@@ -92,6 +118,8 @@ class Profile : Fragment(R.layout.activity_profile) {
     override fun onDestroyView() {
         super.onDestroyView()
         tvUserName = null
+        tvUserEmail = null
+        profileImage = null
         btnLogout = null
         btnMyTickets = null
         btnSettings = null

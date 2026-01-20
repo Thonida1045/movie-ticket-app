@@ -1,6 +1,5 @@
 package com.example.movie_ticket_app.model
 
-class SlidersItems {
-    val image: String= ""
-
-}
+data class SlidersItems(
+    var image: String = ""
+)

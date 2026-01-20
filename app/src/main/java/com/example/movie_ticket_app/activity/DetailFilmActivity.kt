@@ -5,7 +5,6 @@
     import android.view.View
     import android.view.ViewGroup
     import android.view.ViewOutlineProvider
-    import androidx.activity.enableEdgeToEdge
     import androidx.appcompat.app.AppCompatActivity
     import androidx.recyclerview.widget.LinearLayoutManager
     import com.bumptech.glide.Glide
@@ -23,7 +22,6 @@
         private lateinit var binding: ActivityDetailFilmBinding
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            enableEdgeToEdge()
             binding = ActivityDetailFilmBinding.inflate(layoutInflater)
             setContentView(binding.root)
 
