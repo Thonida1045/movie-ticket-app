@@ -12,9 +12,11 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.movie_ticket_app.BottomNavHelper
 import com.example.movie_ticket_app.R
 import com.example.movie_ticket_app.adapter.HistoryAdapter
 import com.example.movie_ticket_app.model.Booking
+import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
@@ -35,8 +37,9 @@ class HistoryActivity : AppCompatActivity() {
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
-        // Back button
+        // Back button - go to main
         findViewById<ImageView>(R.id.btnBack).setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
 
@@ -48,6 +51,9 @@ class HistoryActivity : AppCompatActivity() {
             finish()
         }
 
+        // Setup bottom navigation
+        setupBottomNavigation()
+
         val uid = FirebaseAuth.getInstance().currentUser?.uid
         if (uid == null) {
             Toast.makeText(this, "Please login first.", Toast.LENGTH_SHORT).show()
@@ -58,6 +64,16 @@ class HistoryActivity : AppCompatActivity() {
         }
 
         loadBookingHistory(uid)
+    }
+
+    private fun setupBottomNavigation() {
+        val chipNav = findViewById<ChipNavigationBar>(R.id.chipNav)
+        chipNav?.let {
+            it.setItemSelected(R.id.cart, true)
+            with(BottomNavHelper()) {
+                this@HistoryActivity.setupBottomNav(it)
+            }
+        }
     }
 
     private fun loadBookingHistory(uid: String) {

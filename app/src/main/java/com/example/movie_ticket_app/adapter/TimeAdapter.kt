@@ -19,7 +19,7 @@ class TimeAdapter(private val timeSlots:List<String>,
 
                 binding.TextViewTime.text=time
 
-                if(selectedPosition==position) {
+                if(selectedPosition==adapterPosition) {
                     binding.TextViewTime.setBackgroundResource(R.drawable.yellow_bg)
                     binding.TextViewTime.setTextColor(binding.root.context.getColor(R.color.black))
 
@@ -29,12 +29,13 @@ class TimeAdapter(private val timeSlots:List<String>,
 
                 }
                 binding.root.setOnClickListener {
-                    val position=position
-                    if(position != RecyclerView.NO_POSITION){
+                    val clickedPosition = adapterPosition
+                    if(clickedPosition != RecyclerView.NO_POSITION){
                         lastSelectedPosition=selectedPosition
-                        selectedPosition=position
+                        selectedPosition=clickedPosition
                         notifyItemChanged(lastSelectedPosition)
                         notifyItemChanged(selectedPosition)
+                        onItemClick(time)
                     }
                 }
     }

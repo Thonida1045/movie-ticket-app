@@ -22,7 +22,7 @@ class DateAdapter(private val timeSlots:List<String>,
                 binding.dayTxt.text=dateParts[0]
                 binding.dayMonthTxt.text=dateParts[1]+ " "+dateParts[2]
 
-                if(selectedPosition==position) {
+                if(selectedPosition==adapterPosition) {
                     binding.mainLayout.setBackgroundResource(R.drawable.orange_bg)
                     binding.dayTxt.setTextColor(binding.root.context.getColor(R.color.black))
                     binding.dayMonthTxt.setTextColor(binding.root.context.getColor(R.color.black))
@@ -32,12 +32,13 @@ class DateAdapter(private val timeSlots:List<String>,
                     binding.dayMonthTxt.setTextColor(binding.root.context.getColor(R.color.white))
                 }
                 binding.root.setOnClickListener {
-                    val position=position
-                    if(position != RecyclerView.NO_POSITION){
+                    val clickedPosition = adapterPosition
+                    if(clickedPosition != RecyclerView.NO_POSITION){
                         lastSelectedPosition=selectedPosition
-                        selectedPosition=position
+                        selectedPosition=clickedPosition
                         notifyItemChanged(lastSelectedPosition)
                         notifyItemChanged(selectedPosition)
+                        onItemClick(date)
                     }
                 }
             }

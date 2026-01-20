@@ -50,17 +50,25 @@ class SeatListAdapter(private val seatList: List<Seat>,
                 when (seat.status) {
                     Seat.SeatStatus.AVAILABLE -> {
                         seat.status= Seat.SeatStatus.SELECTED
-                    selectedSeatName.add(seat.name)
-                        notifyItemChanged(position)
+                        // Generate seat label (e.g., A1, B2) based on position
+                        val row = 'A' + (holder.adapterPosition / 7)
+                        val col = (holder.adapterPosition % 7) + 1
+                        val seatLabel = "$row$col"
+                        selectedSeatName.add(seatLabel)
+                        notifyItemChanged(holder.adapterPosition)
                     }
                     Seat.SeatStatus.SELECTED -> {
                         seat.status= Seat.SeatStatus.AVAILABLE
-                        selectedSeatName.add(seat.name)
-                        notifyItemChanged(position)
+                        // Remove seat from selected list
+                        val row = 'A' + (holder.adapterPosition / 7)
+                        val col = (holder.adapterPosition % 7) + 1
+                        val seatLabel = "$row$col"
+                        selectedSeatName.remove(seatLabel)
+                        notifyItemChanged(holder.adapterPosition)
                     }
                     else -> {}
                 }
-                val selected=selectedSeatName.joinToString(",")
+                val selected=selectedSeatName.joinToString(", ")
                 selectedSeats.Return(selected,selectedSeatName.size)
         }
     }

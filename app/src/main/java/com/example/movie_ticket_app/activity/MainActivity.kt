@@ -1,5 +1,6 @@
 package com.example.movie_ticket_app.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.movie_ticket_app.adapter.SliderAdapter
 import com.example.movie_ticket_app.databinding.ActivityMainBinding
 import com.example.movie_ticket_app.model.Film
 import com.example.movie_ticket_app.model.SlidersItems
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -25,6 +27,7 @@ import com.google.firebase.database.ValueEventListener
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: FirebaseDatabase
+    private lateinit var auth: FirebaseAuth
     private val sliderHandle = Handler() 
     private val sliderRunnable= Runnable {
         binding.viewPager2.currentItem = binding.viewPager2.currentItem + 1
@@ -37,11 +40,57 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         
         database = FirebaseDatabase.getInstance()
+        auth = FirebaseAuth.getInstance()
 
         initBanner()
         initTopMovies()
         initUpcoming()
         setupBottomNavigation()
+        setupUserProfile()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Refresh user info when returning to this screen
+        updateUserInfo()
+    }
+
+    private fun setupUserProfile() {
+        // Make profile section clickable
+        binding.profileSection.setOnClickListener {
+            if (auth.currentUser != null) {
+                // Go to profile page if logged in
+                startActivity(Intent(this, ProfileActivity::class.java))
+            } else {
+                // Go to login page if not logged in
+                startActivity(Intent(this, LoginActivity::class.java))
+            }
+        }
+        updateUserInfo()
+    }
+
+    private fun updateUserInfo() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            // User is logged in
+            val displayName = currentUser.displayName
+            val email = currentUser.email ?: ""
+            
+            // Show greeting with name
+            val greeting = if (!displayName.isNullOrEmpty()) {
+                "Hello, $displayName"
+            } else {
+                // Use email username as fallback
+                val username = email.substringBefore("@")
+                "Hello, $username"
+            }
+            binding.tvGreeting.text = greeting
+            binding.tvUserEmail.text = email
+        } else {
+            // User is not logged in
+            binding.tvGreeting.text = "Hello, Guest"
+            binding.tvUserEmail.text = "Tap to sign in"
+        }
     }
 
     private fun setupBottomNavigation() {
@@ -79,8 +128,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // You can keep this empty if you don’t want any behavior change
-               TODO( reason = "Not yet implemented")
+                // Hide progress bar on error
+                binding.progressBarTopMovies.visibility = View.GONE
             }
 
 
@@ -105,7 +154,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+                // Hide progress bar on error
+                binding.progressBarSlider.visibility = View.GONE
             }
 
         })
@@ -164,8 +214,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // You can keep this empty if you don’t want any behavior change
-                TODO(reason = "Not yet implemented")
+                // Hide progress bar on error
+                binding.progressBarUpcoming.visibility = View.GONE
             }
 
 
