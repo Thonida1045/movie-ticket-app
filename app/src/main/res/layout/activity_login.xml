@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A1A2E"
+    android:background="@color/black"
     android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Welcome Back"
-            android:textColor="@android:color/white"
+            android:textColor="@color/yellow"
             android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -140,7 +140,7 @@
             android:layout_width="0dp"
             android:layout_height="56dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/btn_primary"
+            android:background="@drawable/green_bg"
             android:text="Sign In"
             android:textAllCaps="false"
             android:textColor="@android:color/white"
@@ -158,6 +158,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginEnd="16dp"
             android:background="#404060"
+            android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/tvOr"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnLogin" />
@@ -171,6 +172,7 @@
             android:text="or"
             android:textColor="#757575"
             android:textSize="14sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnLogin" />
@@ -182,11 +184,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="32dp"
             android:background="#404060"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvOr"
             app:layout_constraintTop_toBottomOf="@id/btnLogin" />
 
-        <!-- Google Sign-In Button -->
+        <!-- Google Sign-In Button - Hidden (requires Firebase config) -->
         <Button
             android:id="@+id/btnGoogleSignIn"
             android:layout_width="0dp"
@@ -200,6 +203,7 @@
             android:textColor="#1A1A2E"
             android:textSize="16sp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvOr" />
@@ -209,15 +213,16 @@
             android:id="@+id/btnGoRegister"
             android:layout_width="0dp"
             android:layout_height="56dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/btn_secondary"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/light_black_bg"
             android:text="Create New Account"
             android:textAllCaps="false"
-            android:textColor="#FF6D00"
+            android:textColor="@color/yellow"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnLogin" />
             app:layout_constraintTop_toBottomOf="@id/btnGoogleSignIn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

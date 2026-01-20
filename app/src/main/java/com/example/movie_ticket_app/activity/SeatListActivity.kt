@@ -118,7 +118,8 @@ class SeatListActivity : AppCompatActivity() {
                     selectedSeatsLabel = selecedName
                     numberSelectedTxt.text = "$num Seat Selected"
                     val df = DecimalFormat("#.##")
-                    price = df.format(num * film.price).toDouble() // TODO film.price field
+                    val pricePerSeat = 5.0 // $5 per seat
+                    price = df.format(num * pricePerSeat).toDouble()
                     number = num
                     priceTxt.text = "$$price"
                 }

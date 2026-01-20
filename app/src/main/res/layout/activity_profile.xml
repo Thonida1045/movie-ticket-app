@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A1A2E">
+    android:background="@color/black">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
                 android:id="@+id/headerBackground"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:background="#2D2D44"
+                android:background="@drawable/light_black_bg"
                 app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Profile Image Container -->
@@ -82,7 +82,7 @@
             android:layout_marginTop="24dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
-            app:cardBackgroundColor="#2D2D44"
+            app:cardBackgroundColor="@color/black2"
             app:layout_constraintTop_toBottomOf="@id/tvUserEmail">
 
             <LinearLayout
@@ -207,10 +207,20 @@
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/chipNav"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#1A1A2E"
-        android:padding="12dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/light_black_bg"
+        android:padding="4dp"
+        app:cnb_iconColor="@color/white"
+        app:cnb_iconSize="20dp"
         app:cnb_menuResource="@menu/buttom_menu"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:cnb_orientationMode="horizontal"
+        app:cnb_radius="10dp"
+        app:cnb_unselectedColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
